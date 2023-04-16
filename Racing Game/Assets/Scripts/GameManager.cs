@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,20 +10,22 @@ public class GameManager : MonoBehaviour
     public CarAI[] aiCars;
     public Checkpoint[] checkpoints;
     public int totalLaps = 3;
-    public Text lapCountText;
-    public Text positionText;
+    public TextMeshProUGUI lapCountText;
+    public TextMeshProUGUI positionText;
 
     private int lapCount = 0;
     private int playerPosition = 1;
 
     public static GameManager instance;
 
+    public bool hasFired;
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -30,45 +33,52 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnEnable() {
+        Checkpoint.LapEvent += AddLap;
+    }
+
+    private void OnDisable() {
+        Checkpoint.LapEvent -= AddLap;
+    }
+
     void Start()
     {
         // Set lap count UI text
-        lapCountText.text = "Lap " + (lapCount + 1) + "/" + totalLaps;
+        lapCountText.SetText((lapCount + 1).ToString());
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
-        // Update player lap count
-        if (playerCar.currentCheckpointIndex == 5)
-        {
-            lapCount++;
-            playerCar.currentCheckpointIndex = 0;
+        if(SceneManager.GetActiveScene().name == "GameScene") {
+            Debug.Log(lapCount);
 
-            // Check if player finished the race
             if (lapCount >= totalLaps)
             {
-                Debug.Log("Player finished the race!");
+                SceneManager.LoadScene("MainMenu");
+            }
 
-                // Disable player car movement
-                playerCar.enabled = false;
-            }
-            else
+            lapCountText.SetText((lapCount + 1).ToString());
+
+            // Update player race position
+            int aiAheadCount = 0;
+            foreach (CarAI aiCar in aiCars)
             {
-                // Set lap count UI text
-                lapCountText.text = "Lap " + (lapCount + 1) + "/" + totalLaps;
+                if (playerCar.transform.position.z < aiCar.transform.position.z)
+                {
+                    aiAheadCount++;
+                }
             }
+            playerPosition = aiCars.Length + 1 - aiAheadCount;
+            positionText.SetText(playerPosition.ToString());
         }
 
-        // Update player race position
-        int aiAheadCount = 0;
-        foreach (CarAI aiCar in aiCars)
-        {
-            if (playerCar.transform.position.z < aiCar.transform.position.z)
-            {
-                aiAheadCount++;
-            }
+        if(Input.GetKeyDown(KeyCode.Escape)) {
+            SceneManager.LoadScene("MainMenu");
         }
-        playerPosition = aiCars.Length + 1 - aiAheadCount;
-        positionText.text = playerPosition.ToString();
+    }
+
+    private void AddLap() {
+        lapCount++;
     }
 }

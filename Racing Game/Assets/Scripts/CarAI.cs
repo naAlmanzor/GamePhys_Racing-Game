@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CarAI : MonoBehaviour
 {
-    // public Transform[] GameManager.instance.checkpoints;
     public float speed = 10.0f;
     public float obstacleDistance = 3.0f;
     public float obstacleAvoidanceSpeed = 5.0f;
