@@ -1043,7 +1043,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 219691282}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: StartGame
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1425,6 +1425,77 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 780862238}
   m_CullTransparentMesh: 1
+--- !u!1 &785127489
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 785127491}
+  - component: {fileID: 785127490}
+  - component: {fileID: 785127492}
+  m_Layer: 0
+  m_Name: FusionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &785127490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785127489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9e0da7e14b4fd44f97c00e116915f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _runner: {fileID: 0}
+  playerPrefab: {fileID: -2986758665426278767, guid: 69ffef4e0aa814246a0fcacb4f1a1d57, type: 3}
+  UI: {fileID: 785127492}
+--- !u!4 &785127491
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785127489}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 461.5, y: 336, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &785127492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785127489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b5c8c5739559bf4f91f8a8cc011c0f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _runner: {fileID: 0}
+  playerPrefab: {fileID: -2986758665426278767, guid: 69ffef4e0aa814246a0fcacb4f1a1d57, type: 3}
+  UI: {fileID: 785127492}
+  CreateButton: {fileID: 605579255}
+  JoinButton: {fileID: 299041685}
+  numberOfPlayers: {fileID: 1461862063}
+  clientNumberOfPlayers: {fileID: 1461862063}
+  StartButton: {fileID: 931317448}
+  MenuPanel: {fileID: 2036623634}
+  LobbyPanel: {fileID: 1750083583}
+  ClientPlayerCountUI: {fileID: 1461862061}
 --- !u!1 &931317446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1508,9 +1579,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 219691282}
-        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: QuitGame
+      - m_Target: {fileID: 785127492}
+        m_TargetAssemblyTypeName: UIScript, Assembly-CSharp
+        m_MethodName: CreatePlayers
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3057,3 +3128,4 @@ SceneRoots:
   - {fileID: 606931738}
   - {fileID: 619903063}
   - {fileID: 544859493}
+  - {fileID: 785127491}
