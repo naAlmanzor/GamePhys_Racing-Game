@@ -10,12 +10,12 @@ public class Checkpoint : MonoBehaviour
     public bool hasFired;
 
     private void OnTriggerEnter(Collider other) {
-        if(other.CompareTag("Player")) {
-            if(GameManager.instance.playerCar.pastCheckpointIndex == 3 && GameManager.instance.playerCar.currentCheckpointIndex == 4) {
+        // if(other.CompareTag("Player")) {
+        //     if(GameManager.instance.playerCar.pastCheckpointIndex == 3 && GameManager.instance.playerCar.currentCheckpointIndex == 4) {
             
-                LapEvent.Invoke();
-            }
-        }
+        //         LapEvent.Invoke();
+        //     }
+        // }
     }
 
 }

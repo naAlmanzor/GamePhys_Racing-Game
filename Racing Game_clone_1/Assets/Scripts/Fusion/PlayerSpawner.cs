@@ -1,19 +1,34 @@
+using System.Threading.Tasks;
 using Fusion;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
+public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
 {
     public GameObject PlayerPrefab;
     private bool spawned;
+    private PlayerRef localPlayerRef;
+    private bool LoadInvoked;
+    public GameModeHandler gameModeHandler;
 
     public void PlayerJoined(PlayerRef player)
     {
         if (player == Runner.LocalPlayer)
         {
-            Debug.Log("Joined");
+            localPlayerRef = player;
+            Debug.Log($"{localPlayerRef} joined");
+
+            LoadInvoked = false;
         }
     }
+
+    public async void PlayerLeft(PlayerRef player)
+    {
+        Debug.Log($"{localPlayerRef} left");
+        if(!LoadInvoked) await RpcLoadMenuScene();
+    }
+
+    
 
     private void Update()
     {
@@ -21,7 +36,8 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
         {    
             if(SceneManager.GetActiveScene().buildIndex == 1)
             {
-                Runner.Spawn(PlayerPrefab, new Vector3(0, 4, 0), Quaternion.identity);
+                Debug.Log("Spawned Car");
+                // if(!Runner) Runner.Spawn(PlayerPrefab, new Vector3(0, 6, 0), Quaternion.identity);
                 spawned = true;
             }
             else
@@ -29,5 +45,13 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
                 spawned = false;
             }
         }
+    }
+
+    private async Task RpcLoadMenuScene() {
+        if(!SceneManager.GetSceneByBuildIndex(0).isLoaded) await Runner.LoadScene(SceneRef.FromIndex(0), LoadSceneMode.Additive);
+        if(SceneManager.GetSceneByBuildIndex(1).isLoaded) await Runner.UnloadScene(SceneRef.FromIndex(1));
+        LoadInvoked = true;
+
+        await gameModeHandler.DisconnectFromRunner();
     }
 }

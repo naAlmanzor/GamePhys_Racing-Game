@@ -5,8 +5,9 @@ using Fusion;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
-public class UIScript : MonoBehaviour
+public class GameModeHandler : MonoBehaviour
 {
    [SerializeField] private Button MultiplayerButton;
 
@@ -15,7 +16,19 @@ public class UIScript : MonoBehaviour
 
     private void Awake()
     {
-        MultiplayerButton.onClick.AddListener(() => ConnectToRunner(GameMode.Shared));
+        MultiplayerButton?.onClick.AddListener(() => ConnectToRunner(GameMode.Shared));
+    }
+
+    private void Update() {
+        if(SceneManager.GetSceneByBuildIndex(0).isLoaded)
+        {
+            if(!MultiplayerButton)
+            {
+                MultiplayerButton = GameObject.FindGameObjectWithTag("MultButton").GetComponent<Button>();
+                if(MultiplayerButton) MultiplayerButton?.onClick.AddListener(() => ConnectToRunner(GameMode.Shared));
+            }
+            
+        }
     }
 
     public async void ConnectToRunner(GameMode mode)
@@ -39,5 +52,13 @@ public class UIScript : MonoBehaviour
         });
 
         //  Debug.Log($"Hosting");
+    }
+
+    public async Task DisconnectFromRunner()
+    {
+        if(SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            await _runner.Shutdown();
+        }
     }
 }

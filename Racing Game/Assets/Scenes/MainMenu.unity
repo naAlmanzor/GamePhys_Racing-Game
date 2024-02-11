@@ -2762,6 +2762,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 419444900612027628, guid: 69ffef4e0aa814246a0fcacb4f1a1d57, type: 3}
+  gameModeHandler: {fileID: 1823341752}
 --- !u!4 &1823341751
 Transform:
   m_ObjectHideFlags: 0

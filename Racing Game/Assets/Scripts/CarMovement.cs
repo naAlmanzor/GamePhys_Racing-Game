@@ -13,9 +13,9 @@ public class CarMovement : NetworkBehaviour
     public float rotationSpeed = 100f; // car's rotation speed
     private float horizontalInput; // user's input for left/right arrow keys
     private float verticalInput; // user's input for up/down arrow keys
-    public List<Checkpoint> passedCheckpoints = new List<Checkpoint>(); // checkpoints the car has passed
-    public int currentCheckpointIndex = 0;
-    public int pastCheckpointIndex = 0;
+    // public List<Checkpoint> passedCheckpoints = new List<Checkpoint>(); // checkpoints the car has passed
+    // public int currentCheckpointIndex = 0;
+    // public int pastCheckpointIndex = 0;
 
     private void Awake() {
         _controller = GetComponent<CharacterController>();
@@ -46,31 +46,13 @@ public class CarMovement : NetworkBehaviour
             return;
         }
 
-        Vector3 move = Runner.DeltaTime * speed * new Vector3(horizontalInput, 0f, verticalInput);
-        _controller.Move(move + _velocity * Runner.DeltaTime);
+        if(_isTurning || _isAccelerating)
+        {
+
+            Vector3 move = Runner.DeltaTime * speed * new Vector3(horizontalInput, 0f, verticalInput);
+            _controller.Move(move + _velocity * Runner.DeltaTime);
+
+        }
     }
-
-    // void FixedUpdate()
-    // {
-    //     transform.Translate(Vector3.right * Time.deltaTime * speed * verticalInput); // move the car forward/backward
-    //     transform.Rotate(Vector3.up, Time.deltaTime * rotationSpeed * horizontalInput); // rotate the car left/right
-    // }
-
-    // void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.CompareTag("Checkpoint"))
-    //     {
-    //         Checkpoint checkpoint = other.GetComponent<Checkpoint>();
-
-    //         pastCheckpointIndex = currentCheckpointIndex;
-    //         currentCheckpointIndex = checkpoint.index;
-    //     }
-    // }
-
-    // private void OnCollisionEnter(Collision other) {
-    //     if(other.transform.CompareTag("Obstacle")) {
-    //         AudioManager.instance.Play("Crash");
-    //     }    
-    // }
 }
 
