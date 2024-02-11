@@ -4,14 +4,16 @@ using TMPro;
 
 public class Menu : MonoBehaviour
 {
-    private void Start() {
-        if(AudioManager.instance.isPlaying("Rev")) {
-            AudioManager.instance.Stop("Rev");
-        }
+    public GameObject menuObj, lobbyObj, countdownObj;
 
-        if(AudioManager.instance.isPlaying("Crash")) {
-            AudioManager.instance.Stop("Crash");
-        }
+    private void Start() {
+        // if(AudioManager.instance.isPlaying("Rev")) {
+        //     AudioManager.instance.Stop("Rev");
+        // }
+
+        // if(AudioManager.instance.isPlaying("Crash")) {
+        //     AudioManager.instance.Stop("Crash");
+        // }
 
         Cursor.lockState = CursorLockMode.None;
     }
@@ -28,5 +30,11 @@ public class Menu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void LobbyMenu()
+    {
+        menuObj.SetActive(false);
+        lobbyObj.SetActive(true);
     }
 }

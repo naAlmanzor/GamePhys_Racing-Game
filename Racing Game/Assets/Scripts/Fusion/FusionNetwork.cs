@@ -42,8 +42,8 @@ public class FusionNetwork : MonoBehaviour, INetworkRunnerCallbacks
     public void OnConnectedToServer(NetworkRunner runner)
     {
         Debug.Log("Connected to server");
-        //NetworkObject playerObject = runner.Spawn(playerPrefab, Vector3.zero);
-        //runner.SetPlayerObject(runner.LocalPlayer, playerObject);
+        NetworkObject playerObject = runner.Spawn(playerPrefab, Vector3.zero);
+        runner.SetPlayerObject(runner.LocalPlayer, playerObject);
     }
 
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
